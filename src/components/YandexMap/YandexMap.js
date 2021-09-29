@@ -8,8 +8,8 @@ function YandexMap() {
 
     useEffect(() => {
         loadMap()
-            .then(() => {
-                const myMap = new window.ymaps.Map(
+            .then(ymaps => {
+                const myMap = new ymaps.Map(
                     "map",
                     {
                         // Координаты центра карты.
