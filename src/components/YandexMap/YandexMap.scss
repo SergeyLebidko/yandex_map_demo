@@ -1,0 +1,12 @@
+.yandex_map {
+  width: 100vw;
+  height: 80vh;
+  border: 1px solid black;
+}
+
+@media (min-width: 768px) {
+  .yandex_map {
+    width: 50vw;
+    height: 50vh;
+  }
+}

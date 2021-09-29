@@ -1,0 +1,1 @@
+export const MAP_APP_KEY = 'd84a4169-1739-4ba8-a628-d3ca43063114&lang';
