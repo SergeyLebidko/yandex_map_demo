@@ -19,7 +19,8 @@ function YandexMap() {
                         center: [45.02, 38.59],
                         // Уровень масштабирования. Допустимые значения:
                         // от 0 (весь мир) до 19.
-                        zoom: 10
+                        zoom: 10,
+                        controls: ['smallMapDefaultSet']
                     },
                     {
                         autoFitToViewport: 'always'
