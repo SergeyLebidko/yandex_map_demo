@@ -1,12 +1,12 @@
 import React from 'react';
 import YandexMap from '../YandexMap/YandexMap';
-import './App.css';
+import './App.scss';
 
 function App() {
     return (
         <div className="app">
-            Карта:
-            <YandexMap/>
+            <h1>Компонент карты:</h1>
+            <YandexMap idSuffix="1"/>
         </div>
     );
 }
