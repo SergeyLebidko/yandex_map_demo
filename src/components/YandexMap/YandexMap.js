@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {loadMap} from '../../utils';
 import './YandexMap.scss';
 
 function YandexMap({idSuffix}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [coords, setCoords] = useState([]);
+    const searchRef = useRef();
 
     useEffect(() => {
         loadMap()
@@ -34,6 +36,15 @@ function YandexMap({idSuffix}) {
             });
     }, []);
 
+    const searchButtonHandler = () => {
+        if (!searchRef.current) return;
+        const value = searchRef.current.value.trim();
+        if (!value) return;
+        if (coords.some(coord => coord.name === value)) return;
+        setCoords(oldCoords => [...oldCoords, {name: value}]);
+    }
+
+    // В случае ошибки загрузки карты возвращаем заглушку
     if (error) return (
         <div className="yandex_map">
             <span>Не удалось загрузить карту...</span>
@@ -45,10 +56,20 @@ function YandexMap({idSuffix}) {
             {loading ?
                 <span>Загружаю карту...</span>
                 :
-                <div id={`map_${idSuffix}`} className="yandex_map__map_container"/>
+                <>
+                    <div className="yandex_map__search_container">
+                        <input ref={searchRef}/>
+                        <button onClick={searchButtonHandler}>Найти координаты</button>
+                    </div>
+                    {coords.length > 0 &&
+                    <ul className="yandex_map__coords_container">
+                        {coords.map(coord => <li key={coord.name}>{coord.name}</li>)}
+                    </ul>
+                    }
+                    <div id={`map_${idSuffix}`} className="yandex_map__map_container"/>
+                </>
             }
         </div>
-
     );
 }
 
