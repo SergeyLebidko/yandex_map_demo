@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import {loadMap, createRandomString} from '../../utils';
 import './YandexMap.scss';
 
+const DEFAULT_ZOOM = 10;
 const DEFAULT_START_CENTER = {lat: 45.02, lon: 38.59};
 
 const PENDING_ADD = 'pa';    // Объект ожидает добавления на карту
@@ -49,7 +50,7 @@ function YandexMap({idSuffix}) {
                         center: [startCenter.lat, startCenter.lon],
                         // Уровень масштабирования. Допустимые значения:
                         // от 0 (весь мир) до 19.
-                        zoom: 10,
+                        zoom: DEFAULT_ZOOM,
                         controls: ['smallMapDefaultSet']
                     },
                     {
@@ -107,7 +108,7 @@ function YandexMap({idSuffix}) {
 
     const rewindMapToCoords = coords => {
         if (!myMapRef.current || !coords) return;
-        myMapRef.current.panTo(coords);
+        myMapRef.current.panTo(coords).then(() => myMapRef.current.setZoom(DEFAULT_ZOOM, {duration: 200}));
     }
 
     // В случае ошибки загрузки карты возвращаем заглушку
