@@ -5,8 +5,8 @@ import './App.scss';
 function App() {
     return (
         <div className="app">
-            <h1>Компонент карты:</h1>
-            <YandexMap idSuffix="1"/>
+            <h1>Компоненты карты:</h1>
+            <YandexMap/>
         </div>
     );
 }

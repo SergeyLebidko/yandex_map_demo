@@ -15,12 +15,13 @@ const POINT_STATUS_TITLE = {
     [ADDED_ERROR]: 'Не удалось добавить на карту'
 }
 
-function YandexMap({idSuffix}) {
+function YandexMap() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [startCenter, setStartCenter] = useState(null);
     const [points, setPoints] = useState([]);
 
+    const mapContainer = useRef(null);
     const ymapsRef = useRef(null);
     const myMapRef = useRef(null);
     const pointNameRef = useRef(null);
@@ -41,7 +42,7 @@ function YandexMap({idSuffix}) {
             .then(ymaps => {
                 ymapsRef.current = ymaps;
                 myMapRef.current = new ymaps.Map(
-                    `map_${idSuffix}`,
+                    mapContainer.current,
                     {
                         // Координаты центра карты.
                         // Порядок по умолчанию: «широта, долгота».
@@ -146,7 +147,7 @@ function YandexMap({idSuffix}) {
                         )}
                     </ul>
                     }
-                    <div id={`map_${idSuffix}`} className="yandex_map__map_container"/>
+                    <div className="yandex_map__map_container" ref={mapContainer}/>
                 </>
             }
         </div>
