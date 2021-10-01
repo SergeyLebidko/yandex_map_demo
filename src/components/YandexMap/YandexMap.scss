@@ -1,8 +1,7 @@
 .yandex_map {
   padding: 1em;
   background-color: whitesmoke;
-  border-radius: 0.5em;
-  box-shadow: 0 0 15px 3px rgba(100, 100, 100, 0.3);
+  border-radius: 3px;
   border: 1px solid rgb(200, 200, 200);
 
   &__search_container {
@@ -69,11 +68,10 @@
       padding: 3px 10px;
     }
   }
-  
+
   &__map_container {
     width: 80vw;
     height: 80vh;
-    border: 1px solid rgb(150, 150, 150);
     transition: all 150ms;
   }
 }
