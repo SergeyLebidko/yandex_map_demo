@@ -5,7 +5,7 @@ import './App.scss';
 function App() {
     return (
         <div className="app">
-            <h1>Компоненты карты:</h1>
+            <header>Компонент карты:</header>
             <YandexMap/>
         </div>
     );
