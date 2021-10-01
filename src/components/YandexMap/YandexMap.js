@@ -15,6 +15,8 @@ const POINT_STATUS_TITLE = {
     [ADDED_ERROR]: 'Не удалось добавить на карту'
 }
 
+const COLORS = ['OrangeRed', 'LimeGreen', 'DodgerBlue', 'BlueViolet', 'DimGrey'];
+
 function YandexMap({idSuffix}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -79,7 +81,14 @@ function YandexMap({idSuffix}) {
             geocoder
                 .then(res => {
                     const coords = res.geoObjects.get(0).geometry._coordinates;
-                    const mark = new ymapsRef.current.Placemark(coords);
+                    const mark = new ymapsRef.current.Placemark(
+                        coords,
+                        {},
+                        {
+                            preset: 'islands#icon',
+                            iconColor: getRandomColor()
+                        }
+                    );
                     mark.events.add('click', () => rewindMapToCoords(coords));
                     myMapRef.current.geoObjects.add(mark);
 
@@ -110,6 +119,8 @@ function YandexMap({idSuffix}) {
         if (!myMapRef.current || !coords) return;
         myMapRef.current.panTo(coords).then(() => myMapRef.current.setZoom(DEFAULT_ZOOM, {duration: 200}));
     }
+
+    const getRandomColor = () => COLORS[Math.floor(Math.random() * COLORS.length)];
 
     // В случае ошибки загрузки карты возвращаем заглушку
     if (error) return (
