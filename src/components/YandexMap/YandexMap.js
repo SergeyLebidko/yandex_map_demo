@@ -79,6 +79,9 @@ function YandexMap({idSuffix}) {
                 .then(res => {
                     const coords = res.geoObjects.get(0).geometry._coordinates;
                     const mark = new ymapsRef.current.Placemark(coords);
+
+                    mark.events.add('click', () => console.log(point.name));
+
                     myMapRef.current.geoObjects.add(mark);
 
                     replacePoint({...point, coords, mapStatus: ADDED_TO_MAP});
