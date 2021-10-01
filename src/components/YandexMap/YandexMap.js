@@ -79,9 +79,7 @@ function YandexMap({idSuffix}) {
                 .then(res => {
                     const coords = res.geoObjects.get(0).geometry._coordinates;
                     const mark = new ymapsRef.current.Placemark(coords);
-
-                    mark.events.add('click', () => console.log(point.name));
-
+                    mark.events.add('click', () => rewindMapToCoords(coords));
                     myMapRef.current.geoObjects.add(mark);
 
                     replacePoint({...point, coords, mapStatus: ADDED_TO_MAP});
@@ -107,6 +105,11 @@ function YandexMap({idSuffix}) {
         pointNameRef.current.value = '';
     }
 
+    const rewindMapToCoords = coords => {
+        if (!myMapRef.current || !coords) return;
+        myMapRef.current.panTo(coords);
+    }
+
     // В случае ошибки загрузки карты возвращаем заглушку
     if (error) return (
         <div className="yandex_map">
@@ -128,7 +131,7 @@ function YandexMap({idSuffix}) {
                     <ul className="yandex_map__coords_container">
                         {points.map(
                             point =>
-                                <li key={point.id}>
+                                <li key={point.id} onClick={() => rewindMapToCoords(point.coords)}>
                                     <span>{point.name}</span>
                                     <span>{POINT_STATUS_TITLE[point.mapStatus]}</span>
                                 </li>
