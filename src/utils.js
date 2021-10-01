@@ -15,3 +15,10 @@ export async function loadMap() {
         }
     });
 }
+
+export function createRandomString(size = 8) {
+    const letters = 'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm';
+    const result = [];
+    for (let index = 0; index < size; index++) result.push(letters[Math.floor(Math.random() * letters.length)]);
+    return result.join('');
+}
