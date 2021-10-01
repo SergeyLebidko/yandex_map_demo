@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {loadMap, createRandomString} from '../../utils';
+import {loadMap, createRandomString, createRandomColor} from '../../utils';
 import './YandexMap.scss';
 
 const DEFAULT_ZOOM = 10;
@@ -14,8 +14,6 @@ const POINT_STATUS_TITLE = {
     [ADDED_TO_MAP]: 'Добавлен на карту',
     [ADDED_ERROR]: 'Не удалось добавить на карту'
 }
-
-const COLORS = ['OrangeRed', 'LimeGreen', 'DodgerBlue', 'BlueViolet', 'DimGrey'];
 
 function YandexMap({idSuffix}) {
     const [loading, setLoading] = useState(true);
@@ -86,7 +84,7 @@ function YandexMap({idSuffix}) {
                         {},
                         {
                             preset: 'islands#icon',
-                            iconColor: getRandomColor()
+                            iconColor: createRandomColor()
                         }
                     );
                     mark.events.add('click', () => rewindMapToCoords(coords));
@@ -119,8 +117,6 @@ function YandexMap({idSuffix}) {
         if (!myMapRef.current || !coords) return;
         myMapRef.current.panTo(coords).then(() => myMapRef.current.setZoom(DEFAULT_ZOOM, {duration: 200}));
     }
-
-    const getRandomColor = () => COLORS[Math.floor(Math.random() * COLORS.length)];
 
     // В случае ошибки загрузки карты возвращаем заглушку
     if (error) return (

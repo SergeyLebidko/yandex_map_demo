@@ -22,3 +22,8 @@ export function createRandomString(size = 8) {
     for (let index = 0; index < size; index++) result.push(letters[Math.floor(Math.random() * letters.length)]);
     return result.join('');
 }
+
+export function createRandomColor(){
+    const COLORS = ['OrangeRed', 'LimeGreen', 'DodgerBlue', 'BlueViolet', 'DimGrey'];
+    return COLORS[Math.floor(Math.random() * COLORS.length)];
+}
