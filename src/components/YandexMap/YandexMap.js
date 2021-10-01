@@ -8,6 +8,12 @@ const PENDING_ADD = 'pa';    // Объект ожидает добавления
 const ADDED_TO_MAP = 'atm';  // Объект добавлен на карту
 const ADDED_ERROR = 'ae';    // При добавлении объекта на карту возникла ошибка
 
+const POINT_STATUS_TITLE = {
+    [PENDING_ADD]: 'Поиск координат...',
+    [ADDED_TO_MAP]: 'Добавлен на карту',
+    [ADDED_ERROR]: 'Не удалось добавить на карту'
+}
+
 function YandexMap({idSuffix}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -16,7 +22,7 @@ function YandexMap({idSuffix}) {
 
     const ymapsRef = useRef(null);
     const myMapRef = useRef(null);
-    const searchRef = useRef(null);
+    const pointNameRef = useRef(null);
 
     // Подготавливаем стартовые координаты для центра карты
     useEffect(() => {
@@ -71,11 +77,11 @@ function YandexMap({idSuffix}) {
             const geocoder = ymapsRef.current.geocode(point.name);
             geocoder
                 .then(res => {
-                    const [lat, lon] = res.geoObjects.get(0).geometry._coordinates;
-                    const mark = new ymapsRef.current.Placemark([lat, lon]);
+                    const coords = res.geoObjects.get(0).geometry._coordinates;
+                    const mark = new ymapsRef.current.Placemark(coords);
                     myMapRef.current.geoObjects.add(mark);
 
-                    replacePoint({...point, mapStatus: ADDED_TO_MAP});
+                    replacePoint({...point, coords, mapStatus: ADDED_TO_MAP});
                 })
                 .catch(err => {
                     console.log(`Не удалось определить координаты для ${point.name} Ошибка: ${err}`);
@@ -84,13 +90,18 @@ function YandexMap({idSuffix}) {
         });
     }, [points.length]);
 
-
     const searchButtonHandler = () => {
-        if (!searchRef.current) return;
-        const value = searchRef.current.value.trim();
+        if (!pointNameRef.current) return;
+        const value = pointNameRef.current.value.trim();
         if (!value) return;
         if (points.some(point => point.name.toLowerCase() === value.toLowerCase())) return;
-        setPoints(oldPoints => [...oldPoints, {id: createRandomString(), name: value, mapStatus: PENDING_ADD}]);
+        setPoints(oldPoints => [...oldPoints, {
+            id: createRandomString(),
+            name: value,
+            coords: null,
+            mapStatus: PENDING_ADD
+        }]);
+        pointNameRef.current.value = '';
     }
 
     // В случае ошибки загрузки карты возвращаем заглушку
@@ -107,7 +118,7 @@ function YandexMap({idSuffix}) {
                 :
                 <>
                     <div className="yandex_map__search_container">
-                        <input ref={searchRef}/>
+                        <input ref={pointNameRef}/>
                         <button onClick={searchButtonHandler}>Найти координаты</button>
                     </div>
                     {points.length > 0 &&
@@ -116,6 +127,7 @@ function YandexMap({idSuffix}) {
                             point =>
                                 <li key={point.id}>
                                     <span>{point.name}</span>
+                                    <span>{POINT_STATUS_TITLE[point.mapStatus]}</span>
                                 </li>
                         )}
                     </ul>
