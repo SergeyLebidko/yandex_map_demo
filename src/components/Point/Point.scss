@@ -1,6 +1,5 @@
 .point {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   cursor: pointer;
   color: white;
@@ -13,6 +12,25 @@
     padding: 3px 10px;
     border-radius: 3px;
     background-color: white;
-    color: initial;
+    color: gray;
+    margin-left: auto;
+  }
+
+  &__remove_button {
+    margin-left: 0.5em;
+    padding: 3px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: white;
+
+    &:hover {
+      background-color: red;
+      color: white;
+    }
   }
 }

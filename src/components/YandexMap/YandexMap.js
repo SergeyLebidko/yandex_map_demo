@@ -80,7 +80,7 @@ function YandexMap() {
                     mark.events.add('click', () => rewindMapToCoords(coords));
                     myMapRef.current.geoObjects.add(mark);
 
-                    replacePoint({...point, coords, mapStatus: ADDED_TO_MAP});
+                    replacePoint({...point, coords, mark, mapStatus: ADDED_TO_MAP});
                 })
                 .catch(err => {
                     console.log(`Не удалось определить координаты для ${point.name} Ошибка: ${err}`);
@@ -95,6 +95,7 @@ function YandexMap() {
             id: createRandomString(),
             name: searchValue,
             coords: null,
+            mark: null,
             mapStatus: PENDING_ADD
         }, ...oldPoints]);
     }
@@ -108,6 +109,13 @@ function YandexMap() {
     // Обработчик клика на элементе списка точек
     const pointClickHandler = point => {
         if (point.coords) rewindMapToCoords(point.coords);
+    }
+
+    // Обработчик удаления точки
+    const pointRemoveHandler = point => {
+        if (!myMapRef.current || !point.mark) return;
+        myMapRef.current.geoObjects.remove(point.mark);
+        setPoints(oldPoints => oldPoints.filter(oldPoint => oldPoint.id !== point.id));
     }
 
     // В случае ошибки загрузки карты возвращаем заглушку
@@ -124,7 +132,13 @@ function YandexMap() {
                 :
                 <>
                     <SearchBlock searchValueHandler={searchHandler}/>
-                    {points.length > 0 && <PointList points={points} pointClickHandler={pointClickHandler}/>}
+                    {points.length > 0 &&
+                    <PointList
+                        points={points}
+                        pointClickHandler={pointClickHandler}
+                        pointRemoveHandler={pointRemoveHandler}
+                    />
+                    }
                     <div className="yandex_map__map_container" ref={mapContainer}/>
                 </>
             }
