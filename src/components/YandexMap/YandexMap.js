@@ -33,13 +33,9 @@ function YandexMap() {
                 myMapRef.current = new ymaps.Map(
                     mapContainer.current,
                     {
-                        // Координаты центра карты.
-                        // Порядок по умолчанию: «широта, долгота».
-                        // Чтобы не определять координаты центра карты вручную,
-                        // воспользуйтесь инструментом Определение координат.
+                        // Координаты центра карты: «широта, долгота».
                         center: [startCenter.lat, startCenter.lon],
-                        // Уровень масштабирования. Допустимые значения:
-                        // от 0 (весь мир) до 19.
+                        // Уровень масштабирования. Допустимые значения: от 0 (весь мир) до 19.
                         zoom: DEFAULT_ZOOM,
                         controls: ['smallMapDefaultSet']
                     },
@@ -79,9 +75,9 @@ function YandexMap() {
                     );
                     mark.events.add('click', () => rewindMapToCoords(coords));
                     myMapRef.current.geoObjects.add(mark);
-                    rewindMapToCoords(coords);
+                    rewindMapToCoords(mark);
 
-                    replacePoint({...point, coords, mark, mapStatus: ADDED_TO_MAP});
+                    replacePoint({...point, mark, mapStatus: ADDED_TO_MAP});
                 })
                 .catch(err => {
                     console.log(`Не удалось определить координаты для ${point.name} Ошибка: ${err}`);
@@ -95,7 +91,6 @@ function YandexMap() {
         setPoints(oldPoints => [{
             id: createRandomString(),
             name: searchValue,
-            coords: null,
             mark: null,
             mapStatus: PENDING_ADD
         }, ...oldPoints]);
@@ -103,20 +98,17 @@ function YandexMap() {
     }
 
     // Функция, осуществляющая "перемотку" карты до нужных координат
-    const rewindMapToCoords = coords => {
-        if (!myMapRef.current || !coords) return;
-        myMapRef.current.panTo(coords).then(() => myMapRef.current.setZoom(DEFAULT_ZOOM, {duration: 200}));
+    const rewindMapToCoords = mark => {
+        if (!myMapRef.current || !mark) return;
+        myMapRef.current.panTo(mark.geometry.getCoordinates()).then(() => myMapRef.current.setZoom(DEFAULT_ZOOM, {duration: 200}));
     }
 
     // Обработчик клика на элементе списка точек
-    const pointClickHandler = point => {
-        if (point.coords) rewindMapToCoords(point.coords);
-    }
+    const pointClickHandler = point => rewindMapToCoords(point.mark);
 
-    // Обработчик удаления точки
+    // Обработчик удаления точки (из списка точек и, по возможности, с карты)
     const pointRemoveHandler = point => {
-        if (!myMapRef.current || !point.mark) return;
-        myMapRef.current.geoObjects.remove(point.mark);
+        if (point.mark && myMapRef.current) myMapRef.current.geoObjects.remove(point.mark);
         setPoints(oldPoints => oldPoints.filter(oldPoint => oldPoint.id !== point.id));
     }
 
