@@ -79,6 +79,7 @@ function YandexMap() {
                     );
                     mark.events.add('click', () => rewindMapToCoords(coords));
                     myMapRef.current.geoObjects.add(mark);
+                    rewindMapToCoords(coords);
 
                     replacePoint({...point, coords, mark, mapStatus: ADDED_TO_MAP});
                 })
