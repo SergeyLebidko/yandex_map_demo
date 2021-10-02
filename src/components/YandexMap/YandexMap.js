@@ -73,7 +73,7 @@ function YandexMap() {
                             iconColor: createRandomColor()
                         }
                     );
-                    mark.events.add('click', () => rewindMapToCoords(coords));
+                    mark.events.add('click', () => rewindMapToCoords(mark));
                     myMapRef.current.geoObjects.add(mark);
                     rewindMapToCoords(mark);
 
