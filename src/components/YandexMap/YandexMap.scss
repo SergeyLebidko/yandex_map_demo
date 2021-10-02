@@ -1,35 +1,13 @@
+@import '../SearchBlock/SearchBlock';
+
 .yandex_map {
   padding: 1em;
   background-color: whitesmoke;
   border-radius: 3px;
   border: 1px solid rgb(200, 200, 200);
 
-  &__search_container {
+  .search_block {
     margin-bottom: 1em;
-
-    input, button {
-      padding: 3px 10px;
-      outline: none;
-      font-size: 1em;
-      border-radius: 3px;
-      border: 1px solid rgb(200, 200, 200);
-    }
-
-    button {
-      margin-left: 0.5em;
-      cursor: pointer;
-      color: white;
-      background-color: hsl(210, 100%, 56%);
-      border: none;
-
-      &:hover {
-        background-color: hsl(210, 100%, 66%);
-      }
-
-      &:active {
-        background-color: hsl(210, 100%, 76%);
-      }
-    }
   }
 
   &__coords_container {

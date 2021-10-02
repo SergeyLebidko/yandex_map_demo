@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {loadMap, createRandomString, createRandomColor} from '../../utils';
 import './YandexMap.scss';
+import SearchBlock from "../SearchBlock/SearchBlock";
 
 const DEFAULT_ZOOM = 10;
 const DEFAULT_START_CENTER = {lat: 45.02, lon: 38.59};
@@ -24,7 +25,6 @@ function YandexMap() {
     const mapContainer = useRef(null);
     const ymapsRef = useRef(null);
     const myMapRef = useRef(null);
-    const pointNameRef = useRef(null);
 
     // Подготавливаем стартовые координаты для центра карты
     useEffect(() => {
@@ -100,18 +100,14 @@ function YandexMap() {
         });
     }, [points.length]);
 
-    const searchButtonHandler = () => {
-        if (!pointNameRef.current) return;
-        const value = pointNameRef.current.value.trim();
-        if (!value) return;
-        if (points.some(point => point.name.toLowerCase() === value.toLowerCase())) return;
-        setPoints(oldPoints => [...oldPoints, {
+    const searchHandler = searchValue => {
+        if (points.some(point => point.name.toLowerCase() === searchValue.toLowerCase())) return false;
+        setPoints(oldPoints => [{
             id: createRandomString(),
-            name: value,
+            name: searchValue,
             coords: null,
             mapStatus: PENDING_ADD
-        }]);
-        pointNameRef.current.value = '';
+        }, ...oldPoints]);
     }
 
     const rewindMapToCoords = coords => {
@@ -132,10 +128,7 @@ function YandexMap() {
                 <span>Загружаю карту...</span>
                 :
                 <>
-                    <div className="yandex_map__search_container">
-                        <input ref={pointNameRef}/>
-                        <button onClick={searchButtonHandler}>Найти координаты</button>
-                    </div>
+                    <SearchBlock searchValueHandler={searchHandler}/>
                     {points.length > 0 &&
                     <ul className="yandex_map__coords_container">
                         {points.map(
