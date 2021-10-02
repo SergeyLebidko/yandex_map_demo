@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Point from '../Point/Point';
 import './PointList.scss';
 
@@ -16,6 +17,12 @@ function PointList({points, pointClickHandler, pointRemoveHandler}) {
             )}
         </ul>
     );
+}
+
+PointList.propTypes = {
+    points: PropTypes.array,
+    pointClickHandler: PropTypes.func,
+    pointRemoveHandler: PropTypes.func
 }
 
 export default PointList;

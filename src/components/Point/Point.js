@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {POINT_STATUS_TITLE} from '../../settings';
 import './Point.scss';
 
@@ -16,6 +17,12 @@ function Point({point, clickHandler, removeHandler}) {
             <button className="point__remove_button" onClick={removeButtonClickHandler}>Удалить</button>
         </li>
     );
+}
+
+Point.propTypes = {
+    point: PropTypes.object,
+    clickHandler: PropTypes.func,
+    removeHandler: PropTypes.func
 }
 
 export default Point;

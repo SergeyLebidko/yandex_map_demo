@@ -1,4 +1,5 @@
 import React, {useRef} from 'react';
+import PropTypes from 'prop-types';
 import './SearchBlock.scss';
 
 function SearchBlock({searchValueHandler}) {
@@ -20,6 +21,10 @@ function SearchBlock({searchValueHandler}) {
             <button onClick={searchButtonClickHandler}>Найти координаты</button>
         </div>
     );
+}
+
+SearchBlock.propTypes = {
+    searchValueHandler: PropTypes.func
 }
 
 export default SearchBlock;
