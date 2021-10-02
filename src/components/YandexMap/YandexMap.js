@@ -99,6 +99,7 @@ function YandexMap() {
             mark: null,
             mapStatus: PENDING_ADD
         }, ...oldPoints]);
+        return true;
     }
 
     // Функция, осуществляющая "перемотку" карты до нужных координат
