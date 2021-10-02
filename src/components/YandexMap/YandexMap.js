@@ -1,20 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
+import SearchBlock from '../SearchBlock/SearchBlock';
 import {loadMap, createRandomString, createRandomColor} from '../../utils';
+import {PENDING_ADD, ADDED_TO_MAP, ADDED_ERROR, DEFAULT_ZOOM, DEFAULT_START_CENTER} from '../../settings';
 import './YandexMap.scss';
-import SearchBlock from "../SearchBlock/SearchBlock";
-
-const DEFAULT_ZOOM = 10;
-const DEFAULT_START_CENTER = {lat: 45.02, lon: 38.59};
-
-const PENDING_ADD = 'pa';    // Объект ожидает добавления на карту
-const ADDED_TO_MAP = 'atm';  // Объект добавлен на карту
-const ADDED_ERROR = 'ae';    // При добавлении объекта на карту возникла ошибка
-
-const POINT_STATUS_TITLE = {
-    [PENDING_ADD]: 'Поиск координат...',
-    [ADDED_TO_MAP]: 'Добавлен на карту',
-    [ADDED_ERROR]: 'Не удалось добавить на карту'
-}
+import PointList from "../PointList/PointList";
 
 function YandexMap() {
     const [loading, setLoading] = useState(true);
@@ -110,9 +99,15 @@ function YandexMap() {
         }, ...oldPoints]);
     }
 
+    // Функция, осуществляющая "перемотку" карты до нужных координат
     const rewindMapToCoords = coords => {
         if (!myMapRef.current || !coords) return;
         myMapRef.current.panTo(coords).then(() => myMapRef.current.setZoom(DEFAULT_ZOOM, {duration: 200}));
+    }
+
+    // Обработчик клика на элементе списка точек
+    const pointClickHandler = point => {
+        if (point.coords) rewindMapToCoords(point.coords);
     }
 
     // В случае ошибки загрузки карты возвращаем заглушку
@@ -129,17 +124,7 @@ function YandexMap() {
                 :
                 <>
                     <SearchBlock searchValueHandler={searchHandler}/>
-                    {points.length > 0 &&
-                    <ul className="yandex_map__coords_container">
-                        {points.map(
-                            point =>
-                                <li key={point.id} onClick={() => rewindMapToCoords(point.coords)}>
-                                    <span>{point.name}</span>
-                                    <span>{POINT_STATUS_TITLE[point.mapStatus]}</span>
-                                </li>
-                        )}
-                    </ul>
-                    }
+                    {points.length > 0 && <PointList points={points} pointClickHandler={pointClickHandler}/>}
                     <div className="yandex_map__map_container" ref={mapContainer}/>
                 </>
             }

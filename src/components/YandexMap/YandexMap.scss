@@ -1,4 +1,5 @@
 @import '../SearchBlock/SearchBlock';
+@import '../PointList/PointList';
 
 .yandex_map {
   padding: 1em;
@@ -6,45 +7,8 @@
   border-radius: 3px;
   border: 1px solid rgb(200, 200, 200);
 
-  .search_block {
+  .search_block, .point_list {
     margin-bottom: 1em;
-  }
-
-  &__coords_container {
-    list-style-type: none;
-    padding: 0 3px 0 0;
-    margin: 1em 0;
-    max-height: 10em;
-    overflow: auto;
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: lightgray;
-      border-radius: 3px;
-    }
-
-    &:hover::-webkit-scrollbar-thumb {
-      background-color: gray;
-    }
-
-    li + li {
-      margin-top: 5px;
-    }
-
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      color: white;
-      background-color: deepskyblue;
-      border-radius: 3px;
-      padding: 3px 10px;
-    }
   }
 
   &__map_container {

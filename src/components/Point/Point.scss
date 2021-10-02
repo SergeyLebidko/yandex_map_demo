@@ -1,0 +1,18 @@
+.point {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  background-color: gray;
+  border-radius: 3px;
+  padding: 5px 12px;
+
+  &__status {
+    font-size: 0.8em;
+    padding: 3px 10px;
+    border-radius: 3px;
+    background-color: white;
+    color: initial;
+  }
+}
