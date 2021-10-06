@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
 import SearchBlock from '../SearchBlock/SearchBlock';
+import PointList from '../PointList/PointList';
 import {loadMap, createRandomString, createRandomColor} from '../../utils';
 import {PENDING_ADD, ADDED_TO_MAP, ADDED_ERROR, DEFAULT_ZOOM, DEFAULT_START_CENTER} from '../../settings';
 import './YandexMap.scss';
-import PointList from "../PointList/PointList";
 
 function YandexMap() {
     const [loading, setLoading] = useState(true);
