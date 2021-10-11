@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/yandex_map_demo/static/css/main.96c419ff.chunk.css",
-    "main.js": "/yandex_map_demo/static/js/main.ef883996.chunk.js",
-    "main.js.map": "/yandex_map_demo/static/js/main.ef883996.chunk.js.map",
+    "main.css": "/yandex_map_demo/static/css/main.1d973a13.chunk.css",
+    "main.js": "/yandex_map_demo/static/js/main.828b78c0.chunk.js",
+    "main.js.map": "/yandex_map_demo/static/js/main.828b78c0.chunk.js.map",
     "runtime-main.js": "/yandex_map_demo/static/js/runtime-main.49834556.js",
     "runtime-main.js.map": "/yandex_map_demo/static/js/runtime-main.49834556.js.map",
     "static/js/2.ca4249b7.chunk.js": "/yandex_map_demo/static/js/2.ca4249b7.chunk.js",
     "static/js/2.ca4249b7.chunk.js.map": "/yandex_map_demo/static/js/2.ca4249b7.chunk.js.map",
     "index.html": "/yandex_map_demo/index.html",
-    "static/css/main.96c419ff.chunk.css.map": "/yandex_map_demo/static/css/main.96c419ff.chunk.css.map",
+    "static/css/main.1d973a13.chunk.css.map": "/yandex_map_demo/static/css/main.1d973a13.chunk.css.map",
     "static/js/2.ca4249b7.chunk.js.LICENSE.txt": "/yandex_map_demo/static/js/2.ca4249b7.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.49834556.js",
     "static/js/2.ca4249b7.chunk.js",
-    "static/css/main.96c419ff.chunk.css",
-    "static/js/main.ef883996.chunk.js"
+    "static/css/main.1d973a13.chunk.css",
+    "static/js/main.828b78c0.chunk.js"
   ]
 }
