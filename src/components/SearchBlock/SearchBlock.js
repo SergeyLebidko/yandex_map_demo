@@ -17,7 +17,7 @@ function SearchBlock({searchValueHandler}) {
 
     return (
         <div className="search_block">
-            <input ref={inputRef}/>
+            <input ref={inputRef} placeholder="Введите название населенного пункта"/>
             <button onClick={searchButtonClickHandler}>Найти координаты</button>
         </div>
     );
